@@ -49,5 +49,45 @@ class UserRoleSeeder extends Seeder
             'last_login_at' => now(),
             'device_info' => null,
         ]);
+
+        // Merchant user
+        User::updateOrCreate([
+            'email' => 'merchant@example.com'
+        ], [
+            'username' => 'merchant',
+            'password' => Hash::make('MerchantPass123!'),
+            'email' => 'merchant@example.com',
+            'role' => 'merchant',
+            'nama_lengkap' => 'Merchant User',
+            'nim' => null,
+            'nomor_telepon' => null,
+            'jenis_kelamin' => null,
+            'tanggal_lahir' => null,
+            'is_verified' => true,
+            'refresh_token' => null,
+            'refresh_token_expires_at' => null,
+            'last_login_at' => now(),
+            'device_info' => null,
+        ]);
+
+        // Customer user
+        User::updateOrCreate([
+            'email' => 'customer@example.com'
+        ], [
+            'username' => 'customer',
+            'password' => Hash::make('CustomerPass123!'),
+            'email' => 'customer@example.com',
+            'role' => 'customer',
+            'nama_lengkap' => 'Customer User',
+            'nim' => null,
+            'nomor_telepon' => null,
+            'jenis_kelamin' => null,
+            'tanggal_lahir' => null,
+            'is_verified' => true,
+            'refresh_token' => null,
+            'refresh_token_expires_at' => null,
+            'last_login_at' => now(),
+            'device_info' => null,
+        ]);
     }
 }

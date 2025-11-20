@@ -22,24 +22,26 @@
 
 ### Paket Instalasi siap-pakai (disarankan)
 
-Unduh rilis terbaru dari [halaman rilis](https://github.com/zuramai/mazer/releases "halaman rilis") lalu ekstrak pada *folder* yang diinginkan.
+Unduh rilis terbaru dari [halaman rilis](https://github.com/zuramai/mazer/releases "halaman rilis") lalu ekstrak pada _folder_ yang diinginkan.
 
 ### Kembangkan sendiri
 
-
 1. Kloning repositori
+
 ```sh
 git clone https://github.com/zuramai/mazer
 ```
 
 2. Instal dependensi
+
 ```sh
 yarn install
 # ATAU
 npm install
 ```
 
-3. Jalankan secara *local*
+3. Jalankan secara _local_
+
 ```sh
 npm run dev
 ```
@@ -50,30 +52,43 @@ npm run dev
 
 - Kloning repositori `git clone https://github.com/zuramai/mazer`
 - Pastikan Anda telah menginstal dan menjalankan Docker:
-    - `docker build -t mazer-frontend .`
-    - `docker run -it -d -p 8080:80 --name mazer mazer-frontend`
-    - Buka `http://localhost:8080`
+  - `docker build -t mazer-frontend .`
+  - `docker run -it -d -p 8080:80 --name mazer mazer-frontend`
+  - Buka `http://localhost:8080`
 
 ### Menggunakan CDN
+
 Contoh sederhana menggunakan CDN dari [jsdelivr.net](https://www.jsdelivr.com/).
 
 ```html
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dashboard - Mazer Admin Dashboard</title>
 
-    <link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/zuramai/mazer@docs/demo/assets/compiled/svg/favicon.svg" type="image/x-icon">
+    <link
+      rel="shortcut icon"
+      href="https://cdn.jsdelivr.net/gh/zuramai/mazer@docs/demo/assets/compiled/svg/favicon.svg"
+      type="image/x-icon"
+    />
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/zuramai/mazer@docs/demo/assets/compiled/css/app.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/zuramai/mazer@docs/demo/assets/compiled/css/app-dark.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/zuramai/mazer@docs/demo/assets/compiled/css/iconly.css">
-</head>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/zuramai/mazer@docs/demo/assets/compiled/css/app.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/zuramai/mazer@docs/demo/assets/compiled/css/app-dark.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/zuramai/mazer@docs/demo/assets/compiled/css/iconly.css"
+    />
+  </head>
 
-<body>
+  <body>
     <script src="https://cdn.jsdelivr.net/gh/zuramai/mazer@docs/demo/assets/static/js/initTheme.js"></script>
     <!-- Start content here -->
 
@@ -86,19 +101,20 @@ Contoh sederhana menggunakan CDN dari [jsdelivr.net](https://www.jsdelivr.com/).
     <!-- Need: Apexcharts -->
     <script src="https://cdn.jsdelivr.net/gh/zuramai/mazer@docs/demo/assets/extensions/apexcharts/apexcharts.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/zuramai/mazer@docs/demo/assets/static/js/pages/dashboard.js"></script>
-</body>
-
+  </body>
 </html>
 ```
 
-#### *Prefix* CDN
+#### _Prefix_ CDN
 
-Anda dapat menggunakan *url* dengan sebuah *prefix* seperti ini:
+Anda dapat menggunakan _url_ dengan sebuah _prefix_ seperti ini:
+
 ```
 https://cdn.jsdelivr.net/gh/zuramai/mazer@docs/demo
 ```
 
 Contoh penggunaan sederhananya:
+
 ```
 https://cdn.jsdelivr.net/gh/zuramai/mazer@docs/demo/assets/compiled/css/app.css
 ```
@@ -117,7 +133,7 @@ https://cdn.jsdelivr.net/gh/zuramai/mazer@docs/demo/assets/compiled/css/app.css
 - [Ruby on Rails](https://github.com/noesya/mazer-rails) oleh [@noesya](https://github.com/noesya)
 - [Yii2](https://github.com/anovsiradj/yii2-theme-mazer) oleh [@anovsiradj](https://github.com/anovsiradj)
 - [Next JS](https://github.com/dipras/next-mazer) oleh [@dipras](https://github.com/dipras)
-- Apakah Anda membuat proyek menggunakan *Dashboard* kami? Anda dapat menaruh proyeknya di sini dengan melakukan `Pull Request`.
+- Apakah Anda membuat proyek menggunakan _Dashboard_ kami? Anda dapat menaruh proyeknya di sini dengan melakukan `Pull Request`.
 
 ## Kontribusi
 
@@ -129,7 +145,7 @@ Mazer berada di bawah [Lisensi MIT](./LICENSE).
 
 ## Author
 
-Dibuat oleh <a href="https://saugi.me">Saugi</a>.
+Dibuat oleh <a href="https://saugi.me"> Uride </a>.
 
 ## Sponsor
 

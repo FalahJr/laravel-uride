@@ -26,25 +26,45 @@
         <div class="sidebar-menu">
             <ul class="menu">
                 <li class="sidebar-title">Menu</li>
-                <li class="sidebar-item active">
+                <li class="sidebar-item {{ request()->routeIs('home') ? 'active' : '' }}">
                     <a href="{{ url('/home') }}" class="sidebar-link">
                         <i class="bi bi-grid-fill"></i>
                         <span>Dashboard</span>
                     </a>
                 </li>
-                <li class="sidebar-item">
+                {{-- <li class="sidebar-item">
                     <a href="#" class="sidebar-link">
                         <i class="bi bi-layout-text-window-reverse"></i>
                         <span>Tables</span>
                     </a>
+                </li> --}}
+
+                <li class="sidebar-item has-sub">
+                    <a href="#" class='sidebar-link'>
+                        <i class="bi bi-person-badge"></i>
+                        <span>Manajemen Customer</span>
+                    </a>
+                    <ul class="submenu">
+                        <li class="submenu-item">
+                            <a href="{{ route('customers.index') }}">Data Customer</a>
+                        </li>
+                    </ul>
                 </li>
                 <li class="sidebar-item">
-                    <a href="#" class="sidebar-link">
+                    {{-- <a href="#" class="sidebar-link">
                         <i class="bi bi-card-text"></i>
                         <span>Components</span>
                     </a>
-                </li>
-                @php $driverActive = request()->routeIs('drivers.*'); @endphp
+                </li> --}}
+                    @php
+                        $driverActive = request()->routeIs('drivers.*');
+                        $merchantActive = request()->routeIs('merchant.*');
+                        $ewalletActive =
+                            request()->routeIs('ewallet.transactions.*') ||
+                            request()->routeIs('ewallet.transactions.index');
+                        $commissionActive = request()->routeIs('commission.settings.*');
+                    @endphp
+
                 <li class="sidebar-item has-sub {{ $driverActive ? 'active' : '' }}">
                     <a href="#" class="sidebar-link">
                         <i class="bi bi-people-fill"></i>
@@ -56,6 +76,44 @@
                         </li>
                         <li class="submenu-item {{ request()->routeIs('drivers.pengajuan') ? 'active' : '' }}">
                             <a href="{{ route('drivers.pengajuan') }}" class="submenu-link">Pengajuan Driver</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="sidebar-item has-sub {{ $merchantActive ? 'active' : '' }}">
+                    <a href="#" class="sidebar-link">
+                        <i class="bi bi-shop"></i>
+                        <span>Manajemen Merchant</span>
+                    </a>
+                    <ul class="submenu {{ $merchantActive ? 'active' : 'submenu-closed' }}">
+                        <li class="submenu-item {{ request()->routeIs('merchant.index') ? 'active' : '' }}">
+                            <a href="{{ route('merchant.index') }}" class="submenu-link">Data Merchant</a>
+                        </li>
+                        <li class="submenu-item {{ request()->routeIs('merchant.pengajuan') ? 'active' : '' }}">
+                            <a href="{{ route('merchant.pengajuan') }}" class="submenu-link">Pengajuan Merchant</a>
+                        </li>
+                        <li class="submenu-item {{ request()->routeIs('merchant.kategori.*') ? 'active' : '' }}">
+                            <a href="{{ route('merchant.kategori.index') }}" class="submenu-link">Kategori Merchant</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="sidebar-item {{ $commissionActive ? 'active' : '' }}">
+                    <a href="{{ route('commission.settings.index') }}" class="sidebar-link">
+                        <i class="bi bi-graph-up"></i>
+                        <span>Commission Settings</span>
+                    </a>
+                </li>
+
+                <li class="sidebar-item has-sub {{ $ewalletActive ? 'active' : '' }}">
+                    <a href="#" class="sidebar-link">
+                        <i class="bi bi-wallet2"></i>
+                        <span>E-Wallet</span>
+                    </a>
+                    <ul class="submenu {{ $ewalletActive ? 'active' : 'submenu-closed' }}">
+                        <li
+                            class="submenu-item {{ request()->routeIs('ewallet.transactions.index') ? 'active' : '' }}">
+                            <a href="{{ route('ewallet.transactions.index') }}" class="submenu-link">Transactions</a>
                         </li>
                     </ul>
                 </li>

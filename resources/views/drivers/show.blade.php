@@ -2,7 +2,11 @@
 
 @section('content')
     <div class="page-heading">
-        <h3>Detail Pengajuan Driver</h3>
+        @if ($driver->status == 'pending')
+            <h3>Detail Pengajuan Driver</h3>
+        @else
+            <h3>Detail Driver</h3>
+        @endif
     </div>
 
     <div class="page-content">
@@ -52,6 +56,11 @@
                                     </div>
                                 </div>
 
+                                <div class="mt-3">
+                                    <p class="text-muted">Saldo E-Wallet: <strong>Rp
+                                            {{ number_format(optional($ewallet)->saldo ?? 0, 0, ',', '.') }}</strong></p>
+                                </div>
+
                                 {{-- Action buttons (use modals for confirm/reject) --}}
                                 {{-- Hidden forms for submission --}}
                                 <form id="approveForm" method="POST"
@@ -71,9 +80,18 @@
 
                                 <div class="mt-3">
                                     <div class="btn-group" role="group">
-                                        <button type="button" id="btnTerima" class="btn btn-success">Terima</button>
-                                        <button type="button" id="btnTolak" class="btn btn-danger" data-bs-toggle="modal"
-                                            data-bs-target="#rejectModal">Tolak</button>
+                                        @if ($driver->status == 'pending')
+                                            <button type="button" id="btnTerima" class="btn btn-success">Terima</button>
+                                            <button type="button" id="btnTolak" class="btn btn-danger"
+                                                data-bs-toggle="modal" data-bs-target="#rejectModal">Tolak</button>
+                                        @else
+                                            <button type="button" id="btnLihatTransaksi" class="btn btn-info text-white"
+                                                data-user-id="{{ $driver->user_id ?? $driver->id }}">Lihat
+                                                Transaksi</button>
+                                        @endif
+
+
+
                                         <a href="{{ route('drivers.pengajuan') }}" class="btn btn-secondary">Kembali</a>
                                     </div>
                                 </div>
@@ -181,6 +199,44 @@
                             </div>
                         </div>
 
+                        <!-- User Transactions Modal -->
+                        <div class="modal fade" id="transactionsModal" tabindex="-1" aria-hidden="true">
+                            <div class="modal-dialog modal-lg modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Daftar Transaksi E-Wallet</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Tipe</th>
+                                                        <th>Jumlah</th>
+                                                        <th>Status</th>
+                                                        <th>Bukti</th>
+                                                        <th>Dibuat</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="transactionsTableBody">
+                                                    <tr>
+                                                        <td colspan="6" class="text-center text-muted">Memuat...</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Tutup</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <script>
                             document.addEventListener('DOMContentLoaded', function() {
                                 // Ensure bootstrap is available
@@ -196,12 +252,15 @@
                                 var confirmMessage = document.getElementById('confirmMessage');
                                 var confirmBtn = document.getElementById('confirmBtn');
 
-                                // Terima -> show confirmation directly
-                                document.getElementById('btnTerima').addEventListener('click', function() {
-                                    confirmMessage.textContent = 'Apakah Anda yakin ingin menerima pengajuan ini?';
-                                    confirmBtn.dataset.action = 'approve';
-                                    confirmModal.show();
-                                });
+                                // Terima -> show confirmation directly (guard if button exists)
+                                var btnTerima = document.getElementById('btnTerima');
+                                if (btnTerima) {
+                                    btnTerima.addEventListener('click', function() {
+                                        confirmMessage.textContent = 'Apakah Anda yakin ingin menerima pengajuan ini?';
+                                        confirmBtn.dataset.action = 'approve';
+                                        confirmModal.show();
+                                    });
+                                }
 
                                 // When reject form (visible modal) submitted, show confirmation modal with reason
                                 rejectFormVisible.addEventListener('submit', function(e) {
@@ -233,6 +292,77 @@
                                         rejectForm.submit();
                                     }
                                 });
+
+                                // Lihat Transaksi -> fetch via AJAX and show modal
+                                var btnLihat = document.getElementById('btnLihatTransaksi');
+                                if (btnLihat) {
+                                    btnLihat.addEventListener('click', function() {
+                                        var userId = this.dataset.userId;
+                                        var modalEl = document.getElementById('transactionsModal');
+                                        var modal = new bootstrap.Modal(modalEl);
+                                        var tbody = document.getElementById('transactionsTableBody');
+                                        tbody.innerHTML =
+                                            '<tr><td colspan="6" class="text-center text-muted">Memuat...</td></tr>';
+
+                                        fetch('/ewallet/transactions/user/' + userId)
+                                            .then(function(res) {
+                                                if (!res.ok) throw new Error('Tidak dapat memuat transaksi.');
+                                                return res.json();
+                                            })
+                                            .then(function(json) {
+                                                var data = json.data || [];
+                                                if (data.length === 0) {
+                                                    tbody.innerHTML =
+                                                        '<tr><td colspan="6" class="text-center text-muted">Tidak ada transaksi.</td></tr>';
+                                                    modal.show();
+                                                    return;
+                                                }
+
+                                                var rows = '';
+                                                data.forEach(function(tx, idx) {
+                                                    var tipe = (tx.type || '').charAt(0).toUpperCase() + (tx.type ||
+                                                        '').slice(1);
+                                                    var jumlah = 'Rp ' + new Intl.NumberFormat('id-ID').format(tx
+                                                        .amount || 0);
+                                                    var status = tx.status === 'pending' ? 'Menunggu' : (tx
+                                                        .status === 'approved' ? 'Disetujui' : 'Ditolak');
+                                                    var bukti = '-';
+                                                    if (tx.proof_file) {
+                                                        // open proof in new tab
+                                                        bukti =
+                                                            '<button type="button" class="btn btn-sm btn-outline-primary" onclick="window.open(\'' +
+                                                            tx.proof_file + '\', \"_blank\")">Pratinjau</button>';
+                                                    }
+                                                    var created = tx.created_at ? new Date(tx.created_at)
+                                                        .toLocaleString('id-ID', {
+                                                            year: 'numeric',
+                                                            month: '2-digit',
+                                                            day: '2-digit',
+                                                            hour: '2-digit',
+                                                            minute: '2-digit'
+                                                        }) : '-';
+
+                                                    rows += '<tr>' +
+                                                        '<td>' + (idx + 1) + '</td>' +
+                                                        '<td>' + tipe + '</td>' +
+                                                        '<td>' + jumlah + '</td>' +
+                                                        '<td>' + status + '</td>' +
+                                                        '<td>' + bukti + '</td>' +
+                                                        '<td>' + created + '</td>' +
+                                                        '</tr>';
+                                                });
+
+                                                tbody.innerHTML = rows;
+                                                modal.show();
+                                            })
+                                            .catch(function(err) {
+                                                tbody.innerHTML = '<tr><td colspan="6" class="text-center text-danger">' + (
+                                                    err
+                                                    .message || 'Terjadi kesalahan') + '</td></tr>';
+                                                modal.show();
+                                            });
+                                    });
+                                }
                             });
                         </script>
                     </div>

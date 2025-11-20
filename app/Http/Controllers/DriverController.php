@@ -78,7 +78,10 @@ class DriverController extends Controller
             abort(404);
         }
 
-        return view('drivers.show', compact('driver'));
+        // load ewallet balance for this user (if exists)
+        $ewallet = DB::table('ewallet')->where('user_id', $id)->first();
+
+        return view('drivers.show', compact('driver', 'ewallet'));
     }
 
     /**

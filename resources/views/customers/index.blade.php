@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="page-heading">
-        <h3>Data Driver</h3>
+        <h3>Manajemen Customer</h3>
     </div>
 
     <div class="page-content">
@@ -10,12 +10,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
-                        <h4 class="card-title">Driver Terverifikasi</h4>
-                        <form class="d-flex" method="GET" action="{{ route('drivers.index') }}">
-                            <input name="q" value="{{ $q ?? '' }}" class="form-control me-2"
-                                placeholder="Cari nama, username atau plat" />
-                            <button class="btn btn-primary">Cari</button>
-                        </form>
+                        <h4 class="card-title">Data Customer</h4>
                     </div>
                     <div class="card-body">
                         @if (session('status'))
@@ -27,35 +22,27 @@
                                     <tr>
                                         <th>#</th>
                                         <th>Nama</th>
-                                        <th>Username</th>
                                         <th>Email</th>
                                         <th>Telepon</th>
-                                        <th>Nomor Plat</th>
-                                        <th>Nomor SIM</th>
-                                        <th>Status</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse($drivers as $driver)
+                                    @forelse($customers as $c)
                                         <tr>
-                                            <td>{{ $loop->iteration + ($drivers->currentPage() - 1) * $drivers->perPage() }}
+                                            <td>{{ $loop->iteration + ($customers->currentPage() - 1) * $customers->perPage() }}
                                             </td>
-                                            <td>{{ $driver->nama_lengkap }}</td>
-                                            <td>{{ $driver->username }}</td>
-                                            <td>{{ $driver->email }}</td>
-                                            <td>{{ $driver->nomor_telepon }}</td>
-                                            <td>{{ $driver->nomor_plat }}</td>
-                                            <td>{{ $driver->nomor_sim }}</td>
-                                            <td><span class="badge bg-success">{{ $driver->status }}</span></td>
+                                            <td>{{ $c->nama_lengkap }}</td>
+                                            <td>{{ $c->email }}</td>
+                                            <td>{{ $c->nomor_telepon }}</td>
                                             <td>
-                                                <a href="{{ route('drivers.show', $driver->user_id) }}"
+                                                <a href="{{ route('customers.show', $c->id) }}"
                                                     class="btn btn-sm btn-primary">Detail</a>
                                             </td>
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="9">Tidak ada data.</td>
+                                            <td colspan="5">Belum ada customer.</td>
                                         </tr>
                                     @endforelse
                                 </tbody>
@@ -63,7 +50,7 @@
                         </div>
 
                         <div class="d-flex justify-content-center">
-                            {{ $drivers->links() }}
+                            {{ $customers->links('pagination::bootstrap-5') }}
                         </div>
                     </div>
                 </div>

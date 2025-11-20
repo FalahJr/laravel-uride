@@ -21,5 +21,13 @@ class DatabaseSeeder extends Seeder
 
         // Seed sample drivers (users + user_driver)
         $this->call(DriverSeeder::class);
+
+        // Seed sample customers (users + user_address)
+        $this->call(CustomerSeeder::class);
+
+        // Seed sample ewallet for customers, merchants, and drivers
+        $this->call(EwalletSeeder::class);
+        // Seed sample ewallet transactions for each ewallet
+        $this->call(EwalletTransactionSeeder::class);
     }
 }

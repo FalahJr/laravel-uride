@@ -18,7 +18,6 @@
 	<a href="https://github.com/zuramai/mazer/blob/main/README_INDONESIAN.md">Indonesian README</a>&nbsp;&nbsp;&nbsp;
 </p>
 
-
 ## Installation
 
 ### Using a ready-made built (recommended)
@@ -28,12 +27,14 @@ Open the index HTML file and explore the source code.
 
 ### Building yourself
 
-1. Clone the repository 
+1. Clone the repository
+
 ```sh
 git clone https://github.com/zuramai/mazer
 ```
 
 2. Install dependencies
+
 ```sh
 yarn install
 # OR
@@ -41,6 +42,7 @@ npm install
 ```
 
 3. Run it locally
+
 ```sh
 npm run dev
 ```
@@ -51,29 +53,43 @@ npm run dev
 
 - Clone the repository `git clone https://github.com/zuramai/mazer`
 - Make sure you have Docker installed and run:
-    - `docker build -t mazer-frontend .`
-    - `docker run -it -d -p 5173:80 --name mazer mazer-frontend`
-    - Open `http://localhost:5173`
-### Using CDN 
+  - `docker build -t mazer-frontend .`
+  - `docker run -it -d -p 5173:80 --name mazer mazer-frontend`
+  - Open `http://localhost:5173`
+
+### Using CDN
+
 Simple example using CDN from [jsdelivr.net](https://www.jsdelivr.com/).
 
 ```html
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dashboard - Mazer Admin Dashboard</title>
 
-    <link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/zuramai/mazer@docs/demo/assets/compiled/svg/favicon.svg" type="image/x-icon">
+    <link
+      rel="shortcut icon"
+      href="https://cdn.jsdelivr.net/gh/zuramai/mazer@docs/demo/assets/compiled/svg/favicon.svg"
+      type="image/x-icon"
+    />
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/zuramai/mazer@docs/demo/assets/compiled/css/app.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/zuramai/mazer@docs/demo/assets/compiled/css/app-dark.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/zuramai/mazer@docs/demo/assets/compiled/css/iconly.css">
-</head>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/zuramai/mazer@docs/demo/assets/compiled/css/app.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/zuramai/mazer@docs/demo/assets/compiled/css/app-dark.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/zuramai/mazer@docs/demo/assets/compiled/css/iconly.css"
+    />
+  </head>
 
-<body>
+  <body>
     <script src="https://cdn.jsdelivr.net/gh/zuramai/mazer@docs/demo/assets/static/js/initTheme.js"></script>
     <!-- Start content here -->
 
@@ -86,19 +102,20 @@ Simple example using CDN from [jsdelivr.net](https://www.jsdelivr.com/).
     <!-- Need: Apexcharts -->
     <script src="https://cdn.jsdelivr.net/gh/zuramai/mazer@docs/demo/assets/extensions/apexcharts/apexcharts.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/zuramai/mazer@docs/demo/assets/static/js/pages/dashboard.js"></script>
-</body>
-
+  </body>
 </html>
 ```
 
 #### CDN Prefix
 
 You can use the url with a prefix like this:
+
 ```
 https://cdn.jsdelivr.net/gh/zuramai/mazer@docs/demo
 ```
 
 A simple example:
+
 ```
 https://cdn.jsdelivr.net/gh/zuramai/mazer@docs/demo/assets/compiled/css/app.css
 ```
